@@ -1,0 +1,209 @@
+%% part a NFET
+V_gs = part2.Voltage_11;
+I_D = part2.Current_21;
+
+g_m = diff(I_D)./diff(V_gs); %derivative!!
+plot(V_gs(2:end), g_m*1000, '.');
+xlabel('Voltage Gate-Source V_G_S (V)');
+ylabel('Transconductance g_m (mA/V)');
+title('NFET Transconductance'); 
+x = ((V_gs >= 1.38) & (V_gs <= 1.8)); %area to fit
+
+p = polyfit(V_gs(x),g_m(x),1);
+yfit = p(1).*V_gs + p(2);
+%yfit = fit(V_gs(x), g_m(x), 'poly1');
+
+hold on;
+plot(V_gs,yfit*1000);
+%plot(yfit*1000);
+legend('measured', 'fit'); %first thing plotted, second thing
+axis([0.5, 3.5, 0, 1.6]);
+
+V_th = interp1(yfit, V_gs, 0);
+
+%% part a PFET
+V_gs = part1.Voltage_11;
+I_D = part1.Current_21;
+
+g_m = diff(I_D)./diff(V_gs); %derivative!!
+plot(V_gs(2:end), g_m*1000, '.');
+xlabel('Voltage Gate-Source V_G_S (V)');
+ylabel('Transconductance g_m (mA/V)');
+title('PFET Transconductance'); 
+x = ((V_gs >= -3) & (V_gs <= -1.5)); %area to fit
+
+p = polyfit(V_gs(x),g_m(x),1);
+yfit = p(1).*V_gs + p(2);
+%yfit = fit(V_gs(x), g_m(x), 'poly1');
+
+hold on;
+plot(V_gs,yfit*1000);
+legend('measured', 'fit'); %first thing plotted, second thing
+axis([-3.0, -0.5, -0.1, 1.0]);
+
+V_th = interp1(yfit, V_gs, 0);
+
+%% part b
+V_gs = part2.Voltage_11;
+logcurr = log10(abs(part2.Current_21));
+plot(V_gs, logcurr, '.');
+
+x = ((V_gs >= 1.0) & (V_gs <=1.1)); %area to fit
+
+p = polyfit(V_gs(x),logcurr(x),1);
+%yfit = p(1).*V_gs + p(2);
+yfit = fit(V_gs(x), logcurr(x), 'poly1');
+
+hold on;
+%plot(V_gs, yfit);
+plot(yfit);
+
+xlabel('Voltage Gate-Source V_G_S (V)');
+ylabel('Logcurrent (A)');
+title('Subthreshold Conduction');
+
+legend('measured', 'fit'); %first thing plotted, second thing
+axis([0, 3, -12, 5]);
+
+%type yfit to get values
+
+%% part c NFET
+
+plot(part_c.Voltage_21, part_c.Current_21);
+hold on;
+plot(part_c.Voltage_22, part_c.Current_22);
+hold on; 
+plot(part_c.Voltage_23, part_c.Current_23);
+hold on; 
+plot(part_c.Voltage_24, part_c.Current_24);
+hold on;
+plot(part_c.Voltage_25, part_c.Current_25);
+hold on;
+plot(part_c.Voltage_26, part_c.Current_26);
+hold on;
+plot(part_c.Voltage_27, part_c.Current_27);
+
+xlabel('Voltage (V)');
+ylabel('Current (A)');
+title('NFET Output Curve');
+
+legend('1V', '1.25V', '1.5V', '1.75', '2V', '2.25V', '2.5V'); %first thing plotted, second thing
+%axis([0, 5, -0.5, 6]);
+
+%% part c PFET
+
+plot(part_g.Voltage_21, part_c.Current_21);
+hold on;
+plot(part_g.Voltage_22, part_c.Current_22);
+hold on; 
+plot(part_g.Voltage_23, part_c.Current_23);
+hold on; 
+plot(part_g.Voltage_24, part_c.Current_24);
+hold on;
+plot(part_g.Voltage_25, part_c.Current_25);
+hold on;
+plot(part_g.Voltage_26, part_c.Current_26);
+hold on;
+plot(part_g.Voltage_27, part_c.Current_27);
+
+xlabel('Voltage (V)');
+ylabel('Current (A)');
+title('PFET Output Curve');
+
+legend('1V', '1.25V', '1.5V', '1.75', '2V', '2.25V', '2.5V'); %first thing plotted, second thing
+
+%% part d NFET
+I_d = part_c.Current_21;
+V_ds = part_c.Voltage_21;
+
+g_o = diff(I_d)./diff(V_ds); 
+plot(V_ds(2:end), g_o); %do this for different values of V_gs
+hold on;
+g_o2 = diff(part_c.Current_22)./diff(part_c.Voltage_22); 
+plot(part_c.Voltage_22(2:end), g_o2); 
+
+g_o3 = diff(part_c.Current_23)./diff(part_c.Voltage_23); 
+plot(part_c.Voltage_23(2:end), g_o3); 
+
+g_o4 = diff(part_c.Current_24)./diff(part_c.Voltage_24); 
+plot(part_c.Voltage_24(2:end), g_o4); 
+
+g_o5 = diff(part_c.Current_25)./diff(part_c.Voltage_25); 
+plot(part_c.Voltage_25(2:end), g_o5); 
+
+g_o6 = diff(part_c.Current_26)./diff(part_c.Voltage_26); 
+plot(part_c.Voltage_26(2:end), g_o6); 
+
+g_o7 = diff(part_c.Current_27)./diff(part_c.Voltage_27); 
+plot(part_c.Voltage_27(2:end), g_o7); 
+hold off;
+
+xlabel('Voltage V_D_S (V)');
+ylabel('Output Conductance g_o (A/V)');
+title('NFET Output Conductance');
+
+legend('1V', '1.25V', '1.5V', '1.75', '2V', '2.25V', '2.5V'); %first thing plotted, second thing
+%% part d PFET
+
+I_d = part_g.Current_21;
+V_ds = part_g.Voltage_21;
+
+g_o = diff(I_d)./diff(V_ds);
+plot(V_ds(2:end), g_o); %do this for different values of V_gs
+hold on;
+g_o2 = diff(part_g.Current_22)./diff(part_g.Voltage_22); 
+plot(part_g.Voltage_22(2:end), g_o2); 
+
+g_o3 = diff(part_g.Current_23)./diff(part_g.Voltage_23); 
+plot(part_g.Voltage_23(2:end), g_o3); 
+
+g_o4 = diff(part_g.Current_24)./diff(part_g.Voltage_24); 
+plot(part_g.Voltage_24(2:end), g_o4); 
+
+g_o5 = diff(part_g.Current_25)./diff(part_g.Voltage_25); 
+plot(part_g.Voltage_25(2:end), g_o5); 
+
+g_o6 = diff(part_g.Current_26)./diff(part_g.Voltage_26); 
+plot(part_g.Voltage_26(2:end), g_o6); 
+
+g_o7 = diff(part_g.Current_27)./diff(part_g.Voltage_27); 
+plot(part_g.Voltage_27(2:end), g_o7); 
+hold off;
+
+xlabel('Voltage V_D_S (V)');
+ylabel('Output Conductance g_o (A/V)');
+title('PFET Output Conductance');
+
+legend('1V', '1.25V', '1.5V', '1.75', '2V', '2.25V', '2.5V'); %first thing plotted, second thing
+
+%% part e
+
+I = part_d.Current_11;
+V = part_d.Voltage_11;
+
+gd = diff(I)./diff(V);
+plot(V(2:end), gd);
+
+xlabel('Voltage (V)');
+ylabel('Measured Differential Conductance g_d (Ohms)');
+title('Diode-Connected NFET');
+
+
+%% part f
+
+Vout = part_h.Voltage_21;
+Vin = part_h.Voltage_11;
+
+plot(Vin, Vout);
+hold on
+x=[1.3233,1.3233];
+y=[0, 5];
+plot(x,y)
+
+xlabel('V_i_n (V)');
+ylabel('V_o_u_t (V)');
+title('CMOS Inverter');
+
+
+
+
