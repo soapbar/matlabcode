@@ -65,3 +65,27 @@ ylabel('Collector Current (A)')
 title('pnp')
 lgd = legend('-7e-9','-5e-6', '-1e-5', '-1.5e-5', '-2e-5', '-2.5e-5', 'Location','northwest');
 title(lgd,'Base Current (A)')
+
+%%
+plot(Untitled.Vc1,Untitled.Ic1)
+hold on
+plot(Untitled.Vc2,Untitled.Ic2)
+hold off
+hold on 
+plot(Untitled.Vc3,Untitled.Ic3)
+hold off 
+hold on 
+plot(Untitled.Vc4,Untitled.Ic4)
+hold off 
+hold on 
+plot(Untitled.Vc5,Untitled.Ic5)
+hold off 
+hold on
+plot(Untitled.Vc6,Untitled.Ic6)
+hold off
+xlabel('V_C_E (V)')
+ylabel('Collector Current (A)')
+title('npn')
+
+lgd = legend('9e-9','5e-6', '1e-5', '1.5e-5', '2e-5', '2.5e-5');
+title(lgd,'Base Current (A)')
